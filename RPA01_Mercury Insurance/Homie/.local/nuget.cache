@@ -1,0 +1,54 @@
+{
+  "version": 2,
+  "dgSpecHash": "OILMR4CIxUvR2DymfPEkdHrBrgwGlBl5BjXNM7g1+w/VYMqJj1k4qUoTT/FUra2s4b6lZsyv4yzm2LQN2AEA1Q==",
+  "success": false,
+  "projectFilePath": "C:\\Users\\Ellen\\Desktop\\RPA01_Mercury Insurance\\Homie\\.local\\",
+  "expectedPackageFiles": [
+    "C:\\Users\\Ellen\\.nuget\\packages\\avalonedit\\5.0.3\\avalonedit.5.0.3.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\bitmiracle.docotic.pdf\\5.2.8369\\bitmiracle.docotic.pdf.5.2.8369.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\bouncycastle\\1.8.5\\bouncycastle.1.8.5.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\closedxml\\0.87.1\\closedxml.0.87.1.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\credentialmanagement\\1.0.2\\credentialmanagement.1.0.2.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\csvhelper\\2.13.5\\csvhelper.2.13.5.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\documentformat.openxml\\2.5.0\\documentformat.openxml.2.5.0.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\docx\\1.0.0.18\\docx.1.0.0.18.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\extended.wpf.toolkit\\2.8.0\\extended.wpf.toolkit.2.8.0.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\humanizer.core\\2.4.2\\humanizer.core.2.4.2.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\interop.domino.dll\\1.0.0\\interop.domino.dll.1.0.0.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\microsoft.activities\\1.0.1\\microsoft.activities.1.0.1.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\microsoft.activities.extensions\\2.0.6.9\\microsoft.activities.extensions.2.0.6.9.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\microsoft.aspnet.signalr.client\\2.4.0\\microsoft.aspnet.signalr.client.2.4.0.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\microsoft.exchange.webservices\\2.2.0\\microsoft.exchange.webservices.2.2.0.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\microsoft.rest.clientruntime\\2.3.20\\microsoft.rest.clientruntime.2.3.20.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\microsoft.visualstudio.ole.interop\\7.10.6071\\microsoft.visualstudio.ole.interop.7.10.6071.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\npoi\\2.4.1\\npoi.2.4.1.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\restsharp\\106.3.1\\restsharp.106.3.1.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\sharpziplib\\1.0.0\\sharpziplib.1.0.0.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\system.valuetuple\\4.5.0\\system.valuetuple.4.5.0.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath\\19.10.7312.25504\\uipath.19.10.7312.25504.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath.credentials.activities\\1.1.6479.13204\\uipath.credentials.activities.1.1.6479.13204.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath.excel.activities\\2.7.2\\uipath.excel.activities.2.7.2.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath.mail.activities\\1.7.2\\uipath.mail.activities.1.7.2.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath.ocr.contracts\\2.2.1\\uipath.ocr.contracts.2.2.1.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath.pdf.activities\\2.0.1\\uipath.pdf.activities.2.0.1.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath.system.activities\\19.10.1\\uipath.system.activities.19.10.1.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath.uiautomation.activities\\19.11.1\\uipath.uiautomation.activities.19.11.1.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath.vision\\2.0.0\\uipath.vision.2.0.0.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath.webapi.activities\\1.4.4\\uipath.webapi.activities.1.4.4.nupkg.sha512",
+    "C:\\Users\\Ellen\\.nuget\\packages\\uipath.word.activities\\1.3.4\\uipath.word.activities.1.3.4.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1101",
+      "level": "Error",
+      "filePath": "C:\\Users\\Ellen\\Desktop\\RPA01_Mercury Insurance\\Homie\\.local",
+      "message": "Unable to find package MercuryLibraries. No packages exist with this id in source(s): C:\\Users\\Ellen\\AppData\\Local\\UiPath\\app-21.4.3\\Packages, Connect, https://api.nuget.org/v3/index.json, https://gallery.uipath.com/api/v2, https://www.myget.org/F/workflow/, Local, nuget.org, Official",
+      "libraryId": "MercuryLibraries",
+      "targetGraphs": [
+        ".NETFramework,Version=v4.6.1",
+        ".NETFramework,Version=v4.6.1/win7-x86"
+      ]
+    }
+  ]
+}

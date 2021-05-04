@@ -1,0 +1,969 @@
+<Activity mc:Ignorable="sap sap2010 sads" x:Class="Main"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="out_DTVehicleInfo" Type="OutArgument(sd:DataTable)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>Main_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>System.Xml.Serialization</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Data.DataSetExtensions</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualStudio.Services.Common</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>UiPath.Mail</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Flowchart sap2010:Annotation.AnnotationText="This Workflow will extract all info from Vehicle Information tab and returns the extracted data in DataTable.&#xA;&#xA;Assumtions: This workflow is designed to extract maximum of 9 Vehicles info. " DisplayName="Extract Vehicle Information Workflow" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+    <Flowchart.Variables>
+      <Variable x:TypeArguments="sd:DataRow" Name="DTVehicleInfoRow" />
+      <Variable x:TypeArguments="x:Int32" Default="1" Name="VehicleCount" />
+      <Variable x:TypeArguments="x:Boolean" Name="VehicleFound" />
+      <Variable x:TypeArguments="x:String" Name="SelectorDynamic" />
+    </Flowchart.Variables>
+    <Flowchart.StartNode>
+      <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_8">
+        <ui:BuildDataTable DataTable="[out_DTVehicleInfo]" DisplayName="Build data table" sap2010:WorkflowViewState.IdRef="BuildDataTable_2" TableInfo="&lt;NewDataSet&gt;&#xA;  &lt;xs:schema id=&quot;NewDataSet&quot; xmlns=&quot;&quot; xmlns:xs=&quot;http://www.w3.org/2001/XMLSchema&quot; xmlns:msdata=&quot;urn:schemas-microsoft-com:xml-msdata&quot;&gt;&#xA;    &lt;xs:element name=&quot;NewDataSet&quot; msdata:IsDataSet=&quot;true&quot; msdata:MainDataTable=&quot;TableName&quot; msdata:UseCurrentLocale=&quot;true&quot;&gt;&#xA;      &lt;xs:complexType&gt;&#xA;        &lt;xs:choice minOccurs=&quot;0&quot; maxOccurs=&quot;unbounded&quot;&gt;&#xA;          &lt;xs:element name=&quot;TableName&quot;&gt;&#xA;            &lt;xs:complexType&gt;&#xA;              &lt;xs:sequence&gt;&#xA;                &lt;xs:element name=&quot;VehicleName&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Category&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;DateAdded&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Year&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Make&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Model&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Body&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;VIN&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Country&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Manuf&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;CarType&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;PDSymbol&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Type&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;MakeSymbol&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;ModelSymbol&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;StyleSymbol&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;AuxSymbol&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Anti-Lock&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;PassRest&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;AntiTheft&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;CostValue&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Gift&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;PurchaseDate&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;NewUsed&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Use&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Radius&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Days&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;AnnMile&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;MultiCar&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;AnnualMileageverDate&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;GaragingAddress&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;IsVehicleGaragedatMailingAddress&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;DerivedFields&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;RateLevel&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;GoodDriver&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Class&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Accidents&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Tickets&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Points&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;GoodStudent&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Experience&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;PrincipalRated&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;SecondaryPts&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Doc&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Comp&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;Coll&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;RegOwner&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;garagingStreet&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;garagingAddress&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;garagingCity&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;garagingState&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;garagingZip1&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;garagingZip2&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;isCamperAttached&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;camperCost&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;camperYear&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;camperMake&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;camperSerialNumber&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;                &lt;xs:element name=&quot;camperPurchaseDate&quot; type=&quot;xs:string&quot; minOccurs=&quot;0&quot; /&gt;&#xA;              &lt;/xs:sequence&gt;&#xA;            &lt;/xs:complexType&gt;&#xA;          &lt;/xs:element&gt;&#xA;        &lt;/xs:choice&gt;&#xA;      &lt;/xs:complexType&gt;&#xA;    &lt;/xs:element&gt;&#xA;  &lt;/xs:schema&gt;&#xA;&lt;/NewDataSet&gt;" />
+        <FlowStep.Next>
+          <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+            <Sequence DisplayName="Extract Data From Vehicle Info" sap2010:WorkflowViewState.IdRef="Sequence_11">
+              <TryCatch DisplayName="Try catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+                <TryCatch.Try>
+                  <ui:BrowserScope Browser="{x:Null}" SearchScope="{x:Null}" TimeoutMS="{x:Null}" UiBrowser="{x:Null}" BrowserType="IE" DisplayName="Attach Browser 'iexplore.exe Mercury'" sap2010:WorkflowViewState.IdRef="BrowserScope_4" InformativeScreenshot="12fad2699a729be2f6cf4d055a0fafc5" Selector="&lt;html htmlwindowname='NextGen' title='Mercury Insurance NextGen' /&gt;">
+                    <ui:BrowserScope.Body>
+                      <ActivityAction x:TypeArguments="x:Object">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
+                        </ActivityAction.Argument>
+                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_10">
+                          <While sap2010:Annotation.AnnotationText="" sap2010:WorkflowViewState.IdRef="While_1" Condition="[VehicleCount &lt;10]">
+                            <Sequence sap2010:WorkflowViewState.IdRef="Sequence_9">
+                              <Assign sap2010:WorkflowViewState.IdRef="Assign_6">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="sd:DataRow">[DTVehicleInfoRow]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="sd:DataRow">[out_DTVehicleInfo.NewRow]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+                                <Assign.To>
+                                  <OutArgument x:TypeArguments="x:String">[SelectorDynamic]</OutArgument>
+                                </Assign.To>
+                                <Assign.Value>
+                                  <InArgument x:TypeArguments="x:String">["&lt;webctrl aaname='"+VehicleCount.ToString+"*' parentname='vehicleInformationForm' /&gt;"]</InArgument>
+                                </Assign.Value>
+                              </Assign>
+                              <ui:UiElementExists DisplayName="Element Exists (Vehicle Number)" Exists="[VehicleFound]" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
+                                <ui:UiElementExists.Target>
+                                  <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="c0d069ffad08b90d9a3007571da1c86f" Selector="[SelectorDynamic]" TimeoutMS="100" WaitForReady="INTERACTIVE" />
+                                </ui:UiElementExists.Target>
+                              </ui:UiElementExists>
+                              <If Condition="[VehicleFound]" sap2010:WorkflowViewState.IdRef="If_1">
+                                <If.Then>
+                                  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_8">
+                                    <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'On Vehicle'" sap2010:WorkflowViewState.IdRef="Click_1" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="True">
+                                      <ui:Click.CursorPosition>
+                                        <ui:CursorPosition Position="Center">
+                                          <ui:CursorPosition.OffsetX>
+                                            <InArgument x:TypeArguments="x:Int32" />
+                                          </ui:CursorPosition.OffsetX>
+                                          <ui:CursorPosition.OffsetY>
+                                            <InArgument x:TypeArguments="x:Int32" />
+                                          </ui:CursorPosition.OffsetY>
+                                        </ui:CursorPosition>
+                                      </ui:Click.CursorPosition>
+                                      <ui:Click.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="db8bca259fd0883cfb7074d27461c571" Selector="[SelectorDynamic]" WaitForReady="INTERACTIVE" />
+                                      </ui:Click.Target>
+                                    </ui:Click>
+                                    <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_12">
+                                      <Sequence.Variables>
+                                        <Variable x:TypeArguments="x:Boolean" Name="goodDriverExist" />
+                                        <Variable x:TypeArguments="ui:GenericValue" Default="[35]" Name="derivedFieldsIndex" />
+                                        <Variable x:TypeArguments="ui:GenericValue" Name="covInfoIndex" />
+                                        <Variable x:TypeArguments="x:Boolean" Name="camperExist" />
+                                      </Sequence.Variables>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Vehicle Name'" sap2010:WorkflowViewState.IdRef="GetValue_98">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="db8bca259fd0883cfb7074d27461c571" Selector="&lt;webctrl tableCol='1' tag='FONT' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("VehicleName")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Category'" sap2010:WorkflowViewState.IdRef="GetValue_99">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="31f6a2ba00dbe369bbbf5b0cbf3fc02a" Selector="&lt;webctrl id='vehicleCategory' name='vehicleCategory' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Category")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Date Added '" sap2010:WorkflowViewState.IdRef="GetValue_100">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a30dda1ee8f0fd2048723057b80c2157" Selector="&lt;webctrl aaname='*' colName='*' parentname='vehicleInformationForm' rowName=' Category ' tableCol='4' tableRow='1' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("DateAdded")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Year'" sap2010:WorkflowViewState.IdRef="GetValue_101">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="158a0f84a2362b16a6b8339fbbeb8eab" Selector="&lt;webctrl name='modelYear' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Year")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <TryCatch DisplayName="Try Catch" sap2010:WorkflowViewState.IdRef="TryCatch_2">
+                                        <TryCatch.Try>
+                                          <Sequence DisplayName="assume make and model has drop down. if exception, use get text" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                                            <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Make'" sap2010:WorkflowViewState.IdRef="GetValue_102">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="b2ae2d3af1b4ec04665948b735b8320c" Selector="&lt;webctrl name='make' tag='SELECT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Make")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Model'" sap2010:WorkflowViewState.IdRef="GetValue_103">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="63a76bf376ceaf78784c5eee43978a8b" Selector="&lt;webctrl name='model' parentname='vehicleInformationForm' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Model")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                          </Sequence>
+                                        </TryCatch.Try>
+                                        <TryCatch.Catches>
+                                          <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_2">
+                                            <ActivityAction x:TypeArguments="s:Exception">
+                                              <ActivityAction.Argument>
+                                                <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                                              </ActivityAction.Argument>
+                                              <Sequence sap2010:WorkflowViewState.IdRef="Sequence_17">
+                                                <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Warn" Message="make and model are not regular vehicle" />
+                                                <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Make'" sap2010:WorkflowViewState.IdRef="GetValue_155">
+                                                  <ui:GetValue.Target>
+                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1db21425fd9440a8fe2bfc00b00169cd" Selector="&lt;webctrl name='make' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                                                  </ui:GetValue.Target>
+                                                  <ui:GetValue.Value>
+                                                    <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Make")]</OutArgument>
+                                                  </ui:GetValue.Value>
+                                                </ui:GetValue>
+                                                <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Model'" sap2010:WorkflowViewState.IdRef="GetValue_156">
+                                                  <ui:GetValue.Target>
+                                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="fcd2ecc31766244713661ff86115feb1" Selector="&lt;webctrl name='model' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
+                                                  </ui:GetValue.Target>
+                                                  <ui:GetValue.Value>
+                                                    <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Model")]</OutArgument>
+                                                  </ui:GetValue.Value>
+                                                </ui:GetValue>
+                                              </Sequence>
+                                            </ActivityAction>
+                                          </Catch>
+                                        </TryCatch.Catches>
+                                      </TryCatch>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Body'" sap2010:WorkflowViewState.IdRef="GetValue_104">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="ca799e2e9ad22749c5e3c2c90fc2a2d1" Selector="&lt;webctrl name='vehicleBody' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Body")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'VIN'" sap2010:WorkflowViewState.IdRef="GetValue_105">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="8553bd57654088363adf5eab81d401dc" Selector="&lt;webctrl name='vin' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("VIN")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Country'" sap2010:WorkflowViewState.IdRef="GetValue_106">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="e96874585470bd7733ae1b1d1008120b" Selector="&lt;webctrl parentname='vehicleInformationForm' rowName=' VIN' tableCol='4' tableRow='1' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Country")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Manuf.'" sap2010:WorkflowViewState.IdRef="GetValue_107">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="687b8c790fbf947a706cff9ee68280c8" Selector="&lt;webctrl tableCol='6' parentname='vehicleInformationForm' rowName=' VIN' tableRow='1' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Manuf")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Car Type'" sap2010:WorkflowViewState.IdRef="GetValue_108">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="9389854a71749d57e3eab959ba557b3c" Selector="&lt;webctrl name='carType' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("CarType")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'PD Symbol'" sap2010:WorkflowViewState.IdRef="GetValue_109">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="c3d7efda011e03ba4737fc616d5c17c0" Selector="&lt;webctrl name='symbol' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("PDSymbol")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Type'" sap2010:WorkflowViewState.IdRef="GetValue_110">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="cfcb03f5507179a933fa7da2b51eb5c0" Selector="&lt;webctrl name='symbolType' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Type")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Make Symbol'" sap2010:WorkflowViewState.IdRef="GetValue_111">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="0db8afdc337d516418cf955358dc5809" Selector="&lt;webctrl name='makeSymbol' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("MakeSymbol")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Model Symbol'" sap2010:WorkflowViewState.IdRef="GetValue_112">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="05fc575452fb671de6416b14dad80034" Selector="&lt;webctrl name='modelSymbol' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("ModelSymbol")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Style Symbol'" sap2010:WorkflowViewState.IdRef="GetValue_113">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="dec6a0bbfa1951dfc2ce4a223c1fd415" Selector="&lt;webctrl name='styleSymbol' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("StyleSymbol")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Aux Symbol'" sap2010:WorkflowViewState.IdRef="GetValue_114">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="e9edaf3a46839b8fb37dc8fe4e0fc883" Selector="&lt;webctrl name='auxSymbol' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("AuxSymbol")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Anti-Lock'" sap2010:WorkflowViewState.IdRef="GetValue_115">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="65acd66c69092e0c694e58690916d6e9" Selector="&lt;webctrl name='antiLockBrakes' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Anti-Lock")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Pass Rest'" sap2010:WorkflowViewState.IdRef="GetValue_116">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="98b35db7f23f6fbffaa5bf667bae45a5" Selector="&lt;webctrl name='passiveRestraint' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("PassRest")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Anti Theft'" sap2010:WorkflowViewState.IdRef="GetValue_117">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3fb2d94b95669a75ba6cc7c2dedf51b7" Selector="&lt;webctrl name='antiTheftDevice' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("AntiTheft")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Cost/Value'" sap2010:WorkflowViewState.IdRef="GetValue_118">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="8cc0360a69dc8b17dae182911c167551" Selector="&lt;webctrl name='costValue' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("CostValue")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Gift'" sap2010:WorkflowViewState.IdRef="GetValue_119">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="de27c73d68ebebee4e0f8805c743bfb2" Selector="&lt;webctrl name='gift' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Gift")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Purchase Date'" sap2010:WorkflowViewState.IdRef="GetValue_120">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="d19b3ace90f36e42731c346664eb2a53" Selector="&lt;webctrl name='purchaseDate' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("PurchaseDate")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'New/Used'" sap2010:WorkflowViewState.IdRef="GetValue_121">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="20a5197b0c59d363452795e761ee96e0" Selector="&lt;webctrl name='newUsed' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("NewUsed")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Use'" sap2010:WorkflowViewState.IdRef="GetValue_122">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="ab214457329d0bba4c2326186424496f" Selector="&lt;webctrl name='use' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Use")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Radius'" sap2010:WorkflowViewState.IdRef="GetValue_123">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3c85a64837dcd65c9a1c12b6af6ab612" Selector="&lt;webctrl name='radius' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Radius")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Days'" sap2010:WorkflowViewState.IdRef="GetValue_124">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="d4627e41c8947aad9aac6c928e0f09c8" Selector="&lt;webctrl name='days' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Days")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Ann.Mile'" sap2010:WorkflowViewState.IdRef="GetValue_125">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a31f4e8f1e7ea80abe1fbdccc6b5d639" Selector="&lt;webctrl name='annualMileage' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("AnnMile")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Multi Car'" sap2010:WorkflowViewState.IdRef="GetValue_126">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="0bbe5c93b4fc1645027a1f69064c8924" Selector="&lt;webctrl name='multiCar' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("MultiCar")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Annual Mileage ver.Date'" sap2010:WorkflowViewState.IdRef="GetValue_127">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a88106eec046fef0965dba2cfb6d65a7" Selector="&lt;webctrl id='annualMilVerDate' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("AnnualMileageverDate")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Is Vehicle Garaged at Mailing Address'" sap2010:WorkflowViewState.IdRef="GetValue_128">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="c7ae0fb98f2d805463c5052c0f299ed2" Selector="&lt;webctrl name='isVehicleGaraged' parentname='vehicleInformationForm' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("IsVehicleGaragedatMailingAddress")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <If Condition="[DTVehicleInfoRow(&quot;IsVehicleGaragedatMailingAddress&quot;) isnot nothing and DTVehicleInfoRow(&quot;IsVehicleGaragedatMailingAddress&quot;).ToString.Trim = &quot;N&quot;]" sap2010:WorkflowViewState.IdRef="If_2">
+                                        <If.Then>
+                                          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_18">
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_143">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="9b0a75a5397343fff45cf61ccafe292a" Selector="&lt;webctrl name='street' tag='INPUT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("garagingStreet")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_144">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="9195cb14770d6a5886135e5e1f5b2c70" Selector="&lt;webctrl name='address' tag='INPUT' type='text' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("garagingAddress")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_145">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="bbb600419188535f1a3e9dd44d34e445" Selector="&lt;webctrl name='city' tag='INPUT' type='text' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("garagingCity")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_146">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="7b3859b46ad6034718df42a362a7e6d4" Selector="&lt;webctrl name='state' tag='INPUT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("garagingState")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_147">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="269f8ab35fda8ed5e0e1952c1b11c0be" Selector="&lt;webctrl name='zip1' tag='INPUT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("garagingZip1")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_148">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="612893a84b6e43061a71035dcde9074f" Selector="&lt;webctrl name='zip2' tag='INPUT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("garagingZip2")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                          </Sequence>
+                                        </If.Then>
+                                      </If>
+                                      <ui:UiElementExists DisplayName="Camper Exists" Exists="[camperExist]" sap2010:WorkflowViewState.IdRef="UiElementExists_3">
+                                        <ui:UiElementExists.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="&lt;webctrl name='camperAttached' tag='INPUT' /&gt;" TimeoutMS="100" WaitForReady="INTERACTIVE" />
+                                        </ui:UiElementExists.Target>
+                                      </ui:UiElementExists>
+                                      <If Condition="[camperExist]" sap2010:WorkflowViewState.IdRef="If_3">
+                                        <If.Then>
+                                          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_19">
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_149">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="8bb7c14a8152ac845e6c3b450ea0982f" Selector="&lt;webctrl name='camperAttached' tag='INPUT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("isCamperAttached")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_150">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="2c04a9669e03dc7073ad57894ee9da4f" Selector="&lt;webctrl name='cost' tag='INPUT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("camperCost")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_151">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="f4caf376d3129ab966d3f05b881af143" Selector="&lt;webctrl name='camperYear' tag='INPUT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("camperYear")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_152">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="29b97b8ff945cb1a0ac94fa5ebaa0124" Selector="&lt;webctrl name='camperMake' tag='INPUT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("camperMake")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_153">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="c18a97fc0dda05c0cca5f9959d9f3a35" Selector="&lt;webctrl name='serialNumber' tag='INPUT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("camperSerialNumber")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                            <ui:GetValue ContinueOnError="True" DisplayName="Get Text 'INPUT'" sap2010:WorkflowViewState.IdRef="GetValue_154">
+                                              <ui:GetValue.Target>
+                                                <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="a14bd22ecedf5482d1157ff839f2dd79" Selector="&lt;webctrl name='camperPurchaseDate' tag='INPUT' /&gt;" TimeoutMS="500" WaitForReady="INTERACTIVE" />
+                                              </ui:GetValue.Target>
+                                              <ui:GetValue.Value>
+                                                <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("camperPurchaseDate")]</OutArgument>
+                                              </ui:GetValue.Value>
+                                            </ui:GetValue>
+                                          </Sequence>
+                                        </If.Then>
+                                      </If>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Rate Level'" sap2010:WorkflowViewState.IdRef="GetValue_129">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="9f03617d11bc0eec3a832597f98249f3" Selector="&lt;webctrl name='rateLevel' tag='SELECT' /&gt;" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("RateLevel")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <DoWhile DisplayName="Do While" sap2010:WorkflowViewState.IdRef="DoWhile_1" Condition="[not goodDriverExist and derivedFieldsIndex &lt; 40]">
+                                        <Sequence sap2010:WorkflowViewState.IdRef="Sequence_15">
+                                          <Assign sap2010:WorkflowViewState.IdRef="Assign_7">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="ui:GenericValue">[derivedFieldsIndex]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="ui:GenericValue">[derivedFieldsIndex + 1]</InArgument>
+                                            </Assign.Value>
+                                          </Assign>
+                                          <ui:UiElementExists DisplayName="Element Exists 'INPUT'" Exists="[goodDriverExist]" sap2010:WorkflowViewState.IdRef="UiElementExists_2">
+                                            <ui:UiElementExists.Target>
+                                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="7c7df1d187554cc9c1ec5eb0cd6e40c0" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl isleaf='1' tableCol='5' tag='TD' /&gt;&quot;]" TimeoutMS="100" WaitForReady="INTERACTIVE" />
+                                            </ui:UiElementExists.Target>
+                                          </ui:UiElementExists>
+                                        </Sequence>
+                                      </DoWhile>
+                                      <Assign sap2010:WorkflowViewState.IdRef="Assign_8">
+                                        <Assign.To>
+                                          <OutArgument x:TypeArguments="ui:GenericValue">[covInfoIndex]</OutArgument>
+                                        </Assign.To>
+                                        <Assign.Value>
+                                          <InArgument x:TypeArguments="ui:GenericValue">[derivedFieldsIndex + 4]</InArgument>
+                                        </Assign.Value>
+                                      </Assign>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Good Driver'" sap2010:WorkflowViewState.IdRef="GetValue_130">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="35adceda6fd5b3b93e6aacce678bc269" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex +&quot;' tag='TABLE' /&gt;&lt;webctrl isleaf='1' tableCol='5' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("GoodDriver")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Class'" sap2010:WorkflowViewState.IdRef="GetValue_131">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="eb6238bde3a02e180febc6ad6664f692" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex +&quot;' tag='TABLE' /&gt;&lt;webctrl tableCol='3' tableRow='2' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Class")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Accidents'" sap2010:WorkflowViewState.IdRef="GetValue_132">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="6c118fbfb87504a45cdb6550da159e6e" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl tableCol='5' tableRow='2' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Accidents")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Tickets'" sap2010:WorkflowViewState.IdRef="GetValue_133">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="06a1fc84d83f6f4eb2974a78c3fd1395" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl tableCol='7' tableRow='2' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Tickets")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Points'" sap2010:WorkflowViewState.IdRef="GetValue_134">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="e2cf8451e80b3d7645ab0bafacf63e33" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl tableCol='9' tableRow='2' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Points")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Good Student'" sap2010:WorkflowViewState.IdRef="GetValue_135">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="27d3ff3e1c63ae15d51ec6881ac59a72" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl tableCol='2' tableRow='3' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("GoodStudent")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Experience'" sap2010:WorkflowViewState.IdRef="GetValue_136">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="e642636db86698f1ec6e1e84df961b8d" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl isleaf='1' tableCol='4' tableRow='3' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Experience")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Principal/Rated'" sap2010:WorkflowViewState.IdRef="GetValue_137">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="7bc62ce20be8ebad07aba97ecd3a5b30" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl tableCol='6' tableRow='3' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("PrincipalRated")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Secondary Pts'" sap2010:WorkflowViewState.IdRef="GetValue_138">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="671177b89ac9ac27d9f209d0d9c64952" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl tableCol='8' tableRow='3' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("SecondaryPts")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Doc'" sap2010:WorkflowViewState.IdRef="GetValue_139">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="98a2f73c4a5acbaeca647a83fccc51f4" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + derivedFieldsIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl tableCol='10' tableRow='3' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Doc")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Comp'" sap2010:WorkflowViewState.IdRef="GetValue_140">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="1ff096528bf1bde7356ed7852bf6c430" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + covInfoIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl tableCol='2' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Comp")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Coll'" sap2010:WorkflowViewState.IdRef="GetValue_141">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="5c8fb0aac71b6c2f38142177c45f5bc4" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + covInfoIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl tableCol='4' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("Coll")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                      <ui:GetValue ContinueOnError="{x:Null}" DisplayName="Get Text 'Reg.Owner'" sap2010:WorkflowViewState.IdRef="GetValue_142">
+                                        <ui:GetValue.Target>
+                                          <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="8c5ea287e5a03285c29a1d8b5f2daefe" Selector="[&quot;&lt;webctrl css-selector='body&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;form&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;fieldset&amp;gt;table' parentname='vehicleInformationForm' tableRow='&quot; + covInfoIndex + &quot;' tag='TABLE' /&gt;&lt;webctrl isleaf='1' tableCol='6' tag='TD' /&gt;&quot;]" WaitForReady="INTERACTIVE" />
+                                        </ui:GetValue.Target>
+                                        <ui:GetValue.Value>
+                                          <OutArgument x:TypeArguments="x:Object">[DTVehicleInfoRow("RegOwner")]</OutArgument>
+                                        </ui:GetValue.Value>
+                                      </ui:GetValue>
+                                    </Sequence>
+                                    <ui:AddDataRow ArrayRow="{x:Null}" DataRow="[DTVehicleInfoRow]" DataTable="[out_DTVehicleInfo]" DisplayName="Add data row" sap2010:WorkflowViewState.IdRef="AddDataRow_2" />
+                                    <Assign DisplayName="Increment Vehicle Count" sap2010:WorkflowViewState.IdRef="Assign_5">
+                                      <Assign.To>
+                                        <OutArgument x:TypeArguments="x:Int32">[VehicleCount]</OutArgument>
+                                      </Assign.To>
+                                      <Assign.Value>
+                                        <InArgument x:TypeArguments="x:Int32">[VehicleCount+1]</InArgument>
+                                      </Assign.Value>
+                                    </Assign>
+                                  </Sequence>
+                                </If.Then>
+                                <If.Else>
+                                  <Assign sap2010:WorkflowViewState.IdRef="Assign_4">
+                                    <Assign.To>
+                                      <OutArgument x:TypeArguments="x:Int32">[VehicleCount]</OutArgument>
+                                    </Assign.To>
+                                    <Assign.Value>
+                                      <InArgument x:TypeArguments="x:Int32">10</InArgument>
+                                    </Assign.Value>
+                                  </Assign>
+                                </If.Else>
+                              </If>
+                            </Sequence>
+                          </While>
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:BrowserScope.Body>
+                  </ui:BrowserScope>
+                </TryCatch.Try>
+                <TryCatch.Catches>
+                  <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                    <ActivityAction x:TypeArguments="s:Exception">
+                      <ActivityAction.Argument>
+                        <DelegateInArgument x:TypeArguments="s:Exception" Name="exception" />
+                      </ActivityAction.Argument>
+                      <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Error" Message="System Exception Occured in Extract Data From Vehicle info workflow" />
+                    </ActivityAction>
+                  </Catch>
+                </TryCatch.Catches>
+              </TryCatch>
+            </Sequence>
+          </FlowStep>
+        </FlowStep.Next>
+      </FlowStep>
+    </Flowchart.StartNode>
+    <x:Reference>__ReferenceID0</x:Reference>
+    <x:Reference>__ReferenceID1</x:Reference>
+    <sads:DebugSymbol.Symbol>d2FDOlxnaXRSZXBvXFJQQTAxXE1lcmN1cnlMaWJyYXJpZXNcTkdcR2V0IENoYW5nZSBORyBWZWhpY2xlcyBJbmZvXEdldCBDaGFuZ2UgTkcgVmVoaWNsZXMgSW5mby54YW1sjwJNA9gFDwIBAVAzUDYCAQJWCVacPwMBogJZDdAFGAIBA1YmVjsDAaMCWg/PBRoCAQRcE8MFJQIBB8sFF8sFzQECAQVcsAJc+wIDAaECYhnABSQCAQjLBYUBywXKAQIBBmMbvwUjAgEJZB2+BSgCAQxje2OSAQIBCmUfbCgDAZ0CbR90KAMBmAJ1H3k0AwGSAnofvQUkAgENakxqZgMBoAJnTWdfAwGeAnJKcqcBAwGbAm9Lb1wDAZkCd50Bd7ABAwGWAne7AXfAAQMBlQJ1aHV4AwGTAnotej0CAQ58I7EFLgIBFLQFI7sFLAIBEH0liwEwAwGPAowBJacFMAIBH6gFJagF0QECARqpBSWwBS4CARW5BU25BU8CARO2BU62BVwCARGJAbgBiQHLAQMBkAKPAV2PAWMCASCTASeaATUDAYwCmwEnogE1AwGJAqMBJ6oBNQMBhgKrASeyATUDAYMCswEn5AEyAwHwAeUBJ+wBNQMB7QHtASf0ATUDAeoB9QEn/AE1AwHnAf0BJ4QCNQMB5AGFAieMAjUDAeEBjQInlAI1AwHeAZUCJ5wCNQMB2wGdAiekAjUDAdgBpQInrAI1AwHVAa0CJ7QCNQMB0gG1Aie8AjUDAc8BvQInxAI1AwHMAcUCJ8wCNQMByQHNAifUAjUDAcYB1QIn3AI1AwHDAd0CJ+QCNQMBwAHlAifsAjUDAb0B7QIn9AI1AwG6AfUCJ/wCNQMBtwH9AieEAzUDAbQBhQMnjAM1AwGxAY0DJ5QDNQMBrgGVAyecAzUDAasBnQMnpAM1AwGoAaUDJ6wDNQMBpQGtAyfiAywDAYQB4wMn5wM8AgF/6AMnnQQsAgFdngQnpQQ1AgFapgQntgQxAgFNtwQnvgQwAgFIvwQnxgQ1AgFFxwQnzgQ1AgFCzwQn1gQ1AgE/1wQn3gQ1AgE83wQn5gQ1AgE55wQn7gQ1AgE27wQn9gQ1AgEz9wQn/gQ1AgEw/wQnhgU1AgEthwUnjgU1AgEqjwUnlgU1AgEnlwUnngU1AgEknwUnpgU1AgEhqAVQqAVkAgEdqAVvqAWEAQIBG64FT64FXwIBGKsFUKsFXgIBFpgBU5gBdAMBjQKVAboBlQHlAQMBjgKgAVOgAXEDAYoCnQG6AZ0BnQIDAYsCqAFTqAFyAwGHAqUBugGlAbcCAwGIArABU7ABbQMBhAKtAboBrQGCAgMBhQK1ASvGATYDAfoBzgEv4AE6AwHxAeoBU+oBbQMB7gHnAboB5wGEAgMB7wHyAVPyAWwDAesB7wG6Ae8B/AEDAewB+gFT+gFwAwHoAfcBugH3AZoCAwHpAYICU4ICbgMB5QH/AboB/wGaAgMB5gGKAlOKAnADAeIBhwK6AYcCgAIDAeMBkgJTkgJxAwHfAY8CugGPAv8BAwHgAZoCU5oCbQMB3AGXAroBlwKDAgMB3QGiAlOiAnMDAdkBnwK6AZ8CgwIDAdoBqgJTqgJ0AwHWAacCugGnAoQCAwHXAbICU7ICdAMB0wGvAroBrwKEAgMB1AG6AlO6AnIDAdABtwK6AbcCggIDAdEBwgJTwgJyAwHNAb8CugG/AocCAwHOAcoCU8oCcQMBygHHAroBxwKJAgMBywHSAlPSAnIDAccBzwK6Ac8CiAIDAcgB2gJT2gJyAwHEAdcCugHXAoICAwHFAeICU+ICbQMBwQHfAroB3wL9AQMBwgHqAlPqAnUDAb4B5wK6AecChQIDAb8B8gJT8gJwAwG7Ae8CugHvAoACAwG8AfoCU/oCbAMBuAH3AroB9wL8AQMBuQGCA1OCA28DAbUB/wK6Af8C/wEDAbYBigNTigNtAwGyAYcDugGHA/0BAwGzAZIDU5IDcAMBrwGPA7oBjwOGAgMBsAGaA1OaA3EDAawBlwO6AZcDgQIDAa0BogNTogN9AwGpAZ8DugGfA4cCAwGqAaoDU6oDiQEDAaYBpwO6AacDiQIDAacBrQM1rQPmAQMBhQGvAyvgAzYDAYYB5QNs5QOhAQMBgwHlA6wB5QOxAQMBggHjA17jA20DAYAB6AM16ANEAgFe6gMrmwQ2AgFgowRTowRyAgFboAS6AaAE6wECAVymBH2mBLMBAgFZpwQptQQ0AgFOvARZvARxAgFLuQRauQRoAgFJxARTxARzAgFGwQS6AcEEswQCAUfMBFPMBG4CAUPJBLoByQS1BAIBRNQEU9QEcgIBQNEEugHRBLYEAgFB3ART3ARwAgE92QS6AdkEtgQCAT7kBFPkBG8CATrhBLoB4QS2BAIBO+wEU+wEdAIBN+kEugHpBLYEAgE49ART9ARzAgE08QS6AfEEwQQCATX8BFP8BHcCATH5BLoB+QS2BAIBMoQFU4QFdQIBLoEFugGBBbYEAgEvjAVTjAVsAgEriQW6AYkFtwQCASyUBVOUBW0CASiRBboBkQWjBAIBKZwFU5wFbQIBJZkFugGZBaMEAgEmpAVTpAVxAgEioQW6AaEFrgQCASO2AS29ATsDAf8BvgEtxQE7AwH7Ac8BMc8ByQEDAfgB0AEx1wE/AwH1AdgBMd8BPwMB8gGwAy23AzsDAaABuAMtvwM7AwGbAcADLccDOwMBlgHIAy3PAzsDAZEB0AMt1wM7AwGMAdgDLd8DOwMBhwHrAy3yAzsCAXrzAy36AzsCAXX7Ay2CBDsCAXCDBC2KBDsCAWuLBC2SBDsCAWaTBC2aBDsCAWGoBCuvBDQCAVSwBCu0BEACAU+7AVm7AXMDAYACuAGrAbgB1wEDAYICuAHiAbgB5wEDAYECwwFZwwF0AwH8AcABqwHAAe8BAwH+AcAB+gHAAf8BAwH9Ac8BngHPAcYBAwH5AdUBXdUBdwMB9gHSAcQB0gHvAQMB9wHdAV3dAXgDAfMB2gHEAdoB8AEDAfQBtQNZtQN9AwGiAbADSrADUAMBoQGyA6sBsgPYAQMBpAGyA+MBsgPoAQMBowG9A1m9A34DAZ0BuANKuANQAwGcAboDqwG6A+UBAwGfAboD8AG6A/UBAwGeAcUDWcUDewMBmAHAA0rAA1ADAZcBwgOrAcID4gEDAZoBwgPtAcID8gEDAZkBzQNZzQN8AwGTAcgDSsgDUAMBkgHKA6sBygPXAQMBlQHKA+IBygPnAQMBlAHVA1nVA3sDAY4B0ANK0ANQAwGNAdIDqwHSA9YBAwGQAdID4QHSA+YBAwGPAd0DWd0DewMBiQHYA0rYA1ADAYgB2gOrAdoD1gEDAYsB2gPhAdoD5gEDAYoB8ANZ8AN/AgF86wNK6wNQAgF77QOrAe0D4AECAX7tA+sB7QPwAQIBffgDWfgDeQIBd/MDSvMDUAIBdvUDqwH1A9YBAgF59QPhAfUD5gECAXiABFmABHkCAXL7A0r7A1ACAXH9A6sB/QPcAQIBdP0D5wH9A+wBAgFziARZiAR5AgFtgwRKgwRQAgFshQSrAYUE3AECAW+FBOcBhQTsAQIBbpAEWZAEgQECAWiLBEqLBFACAWeNBKsBjQTeAQIBao0E6QGNBO4BAgFpmARZmASBAQIBY5MESpMEUAIBYpUEqwGVBOQBAgFllQTvAZUE9AECAWStBF2tBHUCAVeqBF6qBHICAVWyBKkBsgSjBAIBU7IErgSyBLMEAgFSsARrsAR+AgFQ</sads:DebugSymbol.Symbol>
+  </Flowchart>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="BuildDataTable_2" sap:VirtualizedContainerService.HintSize="200,52.6666666666667">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_6" sap:VirtualizedContainerService.HintSize="865.333333333333,62">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="865.333333333333,62" />
+      <sap2010:ViewStateData Id="UiElementExists_1" sap:VirtualizedContainerService.HintSize="865.333333333333,106" />
+      <sap2010:ViewStateData Id="Click_1" sap:VirtualizedContainerService.HintSize="575.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_98" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_99" sap:VirtualizedContainerService.HintSize="553.333333333333,106">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="GetValue_100" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_101" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_102" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_103" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="Sequence_16" sap:VirtualizedContainerService.HintSize="336,376">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="314,94.6666666666667" />
+      <sap2010:ViewStateData Id="GetValue_155" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_156" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="Sequence_17" sap:VirtualizedContainerService.HintSize="336,510.666666666667">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Catch`1_2" sap:VirtualizedContainerService.HintSize="404.666666666667,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_2" sap:VirtualizedContainerService.HintSize="553.333333333333,614" />
+      <sap2010:ViewStateData Id="GetValue_104" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_105" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_106" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_107" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_108" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_109" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_110" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_111" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_112" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_113" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_114" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_115" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_116" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_117" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_118" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_119" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_120" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_121" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_122" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_123" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_124" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_125" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_126" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_127" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_128" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_143" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_144" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_145" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_146" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_147" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_148" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="Sequence_18" sap:VirtualizedContainerService.HintSize="336,960">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="553.333333333333,1110.66666666667" />
+      <sap2010:ViewStateData Id="UiElementExists_3" sap:VirtualizedContainerService.HintSize="553.333333333333,68" />
+      <sap2010:ViewStateData Id="GetValue_149" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_150" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_151" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_152" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_153" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="GetValue_154" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="Sequence_19" sap:VirtualizedContainerService.HintSize="336,960">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="553.333333333333,1110.66666666667" />
+      <sap2010:ViewStateData Id="GetValue_129" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="Assign_7" sap:VirtualizedContainerService.HintSize="314,62" />
+      <sap2010:ViewStateData Id="UiElementExists_2" sap:VirtualizedContainerService.HintSize="314,106" />
+      <sap2010:ViewStateData Id="Sequence_15" sap:VirtualizedContainerService.HintSize="336,332">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="DoWhile_1" sap:VirtualizedContainerService.HintSize="553.333333333333,500" />
+      <sap2010:ViewStateData Id="Assign_8" sap:VirtualizedContainerService.HintSize="553.333333333333,62" />
+      <sap2010:ViewStateData Id="GetValue_130" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_131" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_132" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_133" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_134" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_135" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_136" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_137" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_138" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_139" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_140" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_141" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="GetValue_142" sap:VirtualizedContainerService.HintSize="553.333333333333,106" />
+      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="575.333333333333,10067.3333333333">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="AddDataRow_2" sap:VirtualizedContainerService.HintSize="575.333333333333,22" />
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="575.333333333333,62" />
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="597.333333333333,10501.3333333333">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_4" sap:VirtualizedContainerService.HintSize="242,62" />
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="865.333333333333,10652" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="887.333333333333,11126">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="While_1" sap:VirtualizedContainerService.HintSize="914,11315.3333333333">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="936,11439.3333333333">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="BrowserScope_4" sap:VirtualizedContainerService.HintSize="950,11585.3333333333">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="952,21">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="968.666666666667,11822.6666666667">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="990.666666666667,11946.6666666667">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,224.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.6666666666667</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,127.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,52.6666666666667</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,180.166666666667 300,224.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="614,698">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+            <av:Size x:Key="ShapeSize">60,74.6666666666667</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,127.5</av:PointCollection>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Main_1" sap:VirtualizedContainerService.HintSize="654,778" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
